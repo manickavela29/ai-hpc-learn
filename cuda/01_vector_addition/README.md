@@ -11,11 +11,13 @@ Vector addition with grid and block demonstrates the advantage of memory coalesc
 Gird to Data Mapping wiht 2D and 3D
 -----------------------------------
 
-Grid size is predominantly decided by the dataset and it is mapped based on the thread block dim that is decided optimilly.
+Grid is a function of data size and chosen block dimension. 
+`num_blocks_3d = ceil(nx/bx), ceil(ny/by), ceil(nz/bz)`
 
-Number of blocks is calculated with dataset dimension (nx,ny and nz), each blockk hanldes a subregion of the vector defined by nx,ny,nz
+Number of blocks is calculated with dataset dimension (nx,ny,nz), each block handles a subregion of size (bx.by.bz), and the grid of blocks together covers the full (nx.ny.nz) dataset.
 
-Efficient Distribution of the work load is handled per problmm by mazimizing warm efficienc, memory coalescing and occupancy with the type of dataset
+Efficient distribution requires reasoning about warm efficiency, coalescing, and occupancy as separate independent failing concern. A kernel can be fully coalesced and still be slow from occupancy waste, vice versa.
+
 
 
 Performance with GRID
